@@ -18,15 +18,48 @@ export class ChildrenFormComponent implements OnInit {
   };
 
   @Input("location") location:any
+  realLocation = 0;
+  invalidIdNumber:boolean = false;
 
   ngOnInit(): void {
-    //this.child = this.personLD.personDetails.children[this.location]
-    //console.log(this.location);
+    this.realLocation = this.location.length - 1;
+    this.child = this.personLD.personDetails.children[this.realLocation]
+    // if(this.child == undefined)
+    //   this.child={
+    //     name:"",
+    //     idNumber:"",
+    //     birthDate:new Date()
+    //   };
+    console.log(this.location.length);
+    console.log(this.child);
     
   }
 
-  save(){
-    this.personLD.personDetails.children[this.location] = this.child;
+  checkId(){
+    var curNum = 0;
+    var sum = 0;
+    for(let i=0;i<=8; i++){
+      curNum = parseInt(this.child.idNumber.charAt(i));
+      if(i % 2 == 0)
+        sum+=curNum;
+      else
+        sum = sum+(curNum*2);
+    }
+    if(sum % 10 !=0){
+      this.invalidIdNumber = true;
+    }
+    else
+    this.invalidIdNumber = false;
+  }
+
+
+  save(num:number){
+    if(num == 1)
+      this.checkId();
+    console.log(this.realLocation);
+      this.personLD.personDetails.children[this.realLocation].name = this.child.name;
+      this.personLD.personDetails.children[this.realLocation].idNumber = this.child.idNumber;
+      this.personLD.personDetails.children[this.realLocation].birthDate = this.child.birthDate;
   }
 
 }

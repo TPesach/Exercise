@@ -36,8 +36,17 @@ export class FormComponent implements OnInit {
   }
 
   initialChildrenArray(numOfChildren:string){
-     var nC = parseInt(numOfChildren)
-    this.personDetails.children = new Array<Children>(nC);
+     var nC = parseInt(numOfChildren);
+     var child = {
+      name:"",
+      idNumber:"",
+      birthDate:new Date()
+     }
+     
+      this.personLD.personDetails.children.push(new Children("","",new Date()));
+      this.personDetails.children=this.personLD.personDetails.children;
+     
+    //this.personLD.personDetails.children = new Array<Children>(nC);
     
   }
 
@@ -63,5 +72,9 @@ export class FormComponent implements OnInit {
     this.onLiving.emit();
   }
 
+  onSubmit(){
+    this.personLD.saveAsProject();
+    alert("שים לב לקובץ פרטים אישיים שהורד למחשב שלך")
+  }
 
 }
