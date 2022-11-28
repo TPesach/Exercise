@@ -1,35 +1,41 @@
 <h1>שלום {{personDetails.firstName+' '+personDetails.lastName}} </h1>
 <button (click)="saveLocalData()" routerLink="/instructions">הוראות מילוי הטופס</button>
-<form #myForm="ngForm" (submit)="onSubmit()" >
+<form #myForm="ngForm" (ngSubmit)="onSubmit()" >
     <label for="firstName">הכנס שם פרטי:</label><br/>
-    <input type="text" value="personDetails.firstName" name="firstName" #name="ngModel"  placeholder="fist name..." [(ngModel)]="personDetails.firstName" minlength="2" required/><br/>
-    <!-- <div [hidden]="!name.errors.required">
-        זהו שדה חובה
-    </div><br/> -->
+    <input type="text" value="personDetails.firstName" name="firstName" #Fname="ngModel"  placeholder="fist name..." [(ngModel)]="personDetails.firstName" minlength="2" maxlength="10" required/><br/>
+    <div *ngIf="Fname.invalid && (Fname.dirty || Fname.touched)" class="alert">
+        זהו שדה חובה, ועליו להכיל בין 2 ל-10 תווים
+    </div><br/>
     <label for="lastName">הכנס שם משפחה:</label><br/>
-    <input type="text" value="personDetails.lastName" name="lastName" placeholder="last name..." [(ngModel)]="personDetails.lastName" minlength="2" required/><br/>
+    <input type="text" value="personDetails.lastName" name="lastName" #Lname="ngModel" placeholder="last name..." [(ngModel)]="personDetails.lastName" minlength="3" maxlength="10" required/><br/>
+    <div *ngIf="Lname.invalid && (Lname.dirty || Lname.touched)" class="alert">
+        זהו שדה חובה, ועליו להכיל בין 3 ל-10 תווים
+    </div><br/>
     <label for="idNumber">הכנס מספר ת.ז.:</label><br/>
-    <input type="text" value="personDetails.idNumber" (blur)="checkId()" name="idNumber" placeholder="identity number..." [(ngModel)]="personDetails.idNumber" minlength="8" maxlength="9" required/><br/>
-    <div *ngIf="invalidIdNumber">
+    <input type="text" value="personDetails.idNumber" #idNum="ngModel" (blur)="checkId()" name="idNumber" placeholder="identity number..." [(ngModel)]="personDetails.idNumber" minlength="8" maxlength="9" required/><br/>
+    <div *ngIf="invalidIdNumber || (idNum.invalid && (idNum.dirty || idNum.touched))" class="alert">
         מספר ת.ז. לא תקין
     </div><br/>
     <label for="birthDate">הכנס תאריך לידה:</label><br/>
     <input type="date" value="personDetails.birthDate" name="birthDate" placeholder="birth date..." [(ngModel)]="personDetails.birthDate" required/><br/>
     <label for="kind">בחר מין</label><br/>
-    <select name="kind" value="personDetails.kind" [(ngModel)]="personDetails.kind" required>
+    <select name="kind" value="personDetails.kind" #kind="ngModel" [(ngModel)]="personDetails.kind" required>
         <option *ngFor="let k of kinds">{{k}}</option>
     </select><br/>
+    <div *ngIf="kind.invalid && (kind.dirty || kind.touched)" class="alert">
+        זהו שדה חובה, עליך לבחור אחד מהאפשרויות
+    </div><br/>
     <label for="hmo">בחר קופת חולים</label><br/>
     <select name="hmo" value="personDetails.hmo" [(ngModel)]="personDetails.hmo" required>
-        <option>בחר קופת חולים</option>
         <option *ngFor="let hmo of HMO">{{hmo}}</option>
     </select><br/>
     <label >הכנס מספר ילדים</label><br/>
-    <input type="number" #numOfChildren (change)="initialChildrenArray(numOfChildren.value)" placeholder="מספר ילדים" required/>
+    <input type="number" #numOfChildren (change)="initialChildrenArray(numOfChildren.value)" placeholder="מספר ילדים"/>
     <div *ngIf="personDetails.children.length > 0">
-        <app-children-form name="children" *ngFor="let c of personDetails.children" [location]="personDetails.children.concat()" ></app-children-form>
+        <app-children-form name="children" *ngFor="let c of personDetails.children"  ></app-children-form>
+        <!-- [location]="personDetails.children.concat()" -->
     </div><br/><br/>
-    <input type="submit" value="שמור">
+    <input type="submit" value="שמור" [disabled]="!myForm.valid">
 </form>
 
 <router-outlet></router-outlet>
