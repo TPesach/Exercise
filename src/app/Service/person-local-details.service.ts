@@ -10,6 +10,8 @@ export class PersonLocalDetailsService {
 
   constructor() { }
 
+  // אובייקט שיכיל במהלך הביקור באתר את הנתונים שהוכנסו
+  // (DI האובייקט יהיה זמין בכל המחלקות (ע"י הזרקת
   personDetails={
     firstName:"",
         lastName:"",
@@ -21,10 +23,10 @@ export class PersonLocalDetailsService {
   }
 
   
-
+//שמירת הנתונים
   saveAsProject(){
-    //you can enter your own file name and extension
-    debugger;
+    //המרת הפרטים האישיים לטקסט
+    //כדי לאפשר כתיבה לקובץ
     let myTxt=`פרטים אישיים:
 שם פרטי: ${this.personDetails.firstName}
 שם משפחה: ${this.personDetails.lastName}
@@ -36,11 +38,14 @@ export class PersonLocalDetailsService {
     `
     this.writeContents(myTxt, 'My Details File'+'.txt', 'text/plain');
   }
+
+  //כתיבת הפרטים לקובץ
   writeContents(content:any, fileName:any, contentType:any) {
-    debugger;
     var a = document.createElement('a');
+    //יצירת הקובץ וכתיבת התוכן לתוכו
     var file = new Blob([content], {type: contentType});
     a.href = URL.createObjectURL(file);
+    //הורדת הקובץ כדי שיהיה זמין
     a.download = fileName;
     a.click();
   }

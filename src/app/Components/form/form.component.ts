@@ -14,6 +14,8 @@ export class FormComponent implements OnInit {
 
   constructor(private personLD:PersonLocalDetailsService) { }
 
+  // האובייקט שיכיל בביקור חדש נתונים נקיים
+  // HTMLויקבל לתוכו את הנתונים שיכנסו מקובץ ה
   personDetails = {
     firstName:"",
         lastName:"",
@@ -27,29 +29,33 @@ export class FormComponent implements OnInit {
   HMO = ["מאוחדת", "כללית", "מכבי", "לאומית"];
   children = [];
   location=0;
+  // פרמטר הקובע האם להציג הערת שגיאה
   invalidIdNumber:boolean = false;
 
   @Output("on-living")onLiving: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit(): void {
+    // קבלת מידע מהסרביס האם יש כבר שדות מלאים
+    // routeז"א שזה לא ביקור ראשון בקומפוננטה אלא מעבר ב
     this.personDetails = this.personLD.personDetails;
   }
 
   initialChildrenArray(numOfChildren:string){
-     var nC = parseInt(numOfChildren);
-     var child = {
-      name:"",
-      idNumber:"",
-      birthDate:new Date()
-     }
+    //  var nC = parseInt(numOfChildren);
+    //  var child = {
+    //   name:"",
+    //   idNumber:"",
+    //   birthDate:new Date()
+    //  }
      
-      this.personLD.personDetails.children.push(new Children("","",new Date()));
-      this.personDetails.children=this.personLD.personDetails.children;
+    //   this.personLD.personDetails.children.push(new Children("","",new Date()));
+    //   this.personDetails.children=this.personLD.personDetails.children;
      
     //this.personLD.personDetails.children = new Array<Children>(nC);
     
   }
 
+  // בדיקת תקינות על הערך שהוכנס בתור מספר ת"ז
   checkId(){
     var curNum = 0;
     var sum = 0;
@@ -67,11 +73,14 @@ export class FormComponent implements OnInit {
     this.invalidIdNumber = false;
   }
 
+  // שמירת הנתונים בסרביס בעת מעבר לקומפוננטה אחרת
+  // בכדי שהנתונים לא יאבדו וכן כדי שהם יהיו נגישים בשאר המחלקות
   saveLocalData(){
     this.personLD.personDetails = this.personDetails;
     this.onLiving.emit();
   }
 
+  // שמירת הנתונים והורדת קובץ עם הפרטים האישיים למחשב
   onSubmit(){
     this.personLD.saveAsProject();
     alert("שים לב לקובץ פרטים אישיים שהורד למחשב שלך")
