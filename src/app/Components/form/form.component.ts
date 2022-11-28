@@ -27,6 +27,7 @@ export class FormComponent implements OnInit {
   HMO = ["מאוחדת", "כללית", "מכבי", "לאומית"];
   children = [];
   location=0;
+  invalidIdNumber:boolean = false;
 
   @Output("on-living")onLiving: EventEmitter<any> = new EventEmitter<any>();
 
@@ -40,13 +41,27 @@ export class FormComponent implements OnInit {
     
   }
 
+  checkId(){
+    var curNum = 0;
+    var sum = 0;
+    for(let i=0;i<=8; i++){
+      curNum = parseInt(this.personDetails.idNumber.charAt(i));
+      if(i % 2 == 0)
+        sum+=curNum;
+      else
+        sum = sum+(curNum*2);
+    }
+    if(sum % 10 !=0){
+      this.invalidIdNumber = true;
+    }
+    else
+    this.invalidIdNumber = false;
+  }
+
   saveLocalData(){
     this.personLD.personDetails = this.personDetails;
     this.onLiving.emit();
   }
 
-  onSubmit(){
-    
-  }
 
 }

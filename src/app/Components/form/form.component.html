@@ -2,11 +2,17 @@
 <button (click)="saveLocalData()" routerLink="/instructions">הוראות מילוי הטופס</button>
 <form #myForm="ngForm">
     <label for="firstName">הכנס שם פרטי:</label><br/>
-    <input type="text" value="personDetails.firstName" name="firstName"  placeholder="fist name..." [(ngModel)]="personDetails.firstName" required/><br/>
+    <input type="text" value="personDetails.firstName" name="firstName" #name="ngModel"  placeholder="fist name..." [(ngModel)]="personDetails.firstName" minlength="2" required/><br/>
+    <!-- <div [hidden]="!name.errors.required">
+        זהו שדה חובה
+    </div><br/> -->
     <label for="lastName">הכנס שם משפחה:</label><br/>
-    <input type="text" value="personDetails.lastName" name="lastName" placeholder="last name..." [(ngModel)]="personDetails.lastName" required/><br/>
+    <input type="text" value="personDetails.lastName" name="lastName" placeholder="last name..." [(ngModel)]="personDetails.lastName" minlength="2" required/><br/>
     <label for="idNumber">הכנס מספר ת.ז.:</label><br/>
-    <input type="text" value="personDetails.idNumber" name="idNumber" placeholder="identity number..." [(ngModel)]="personDetails.idNumber" required/><br/>
+    <input type="text" value="personDetails.idNumber" (blur)="checkId()" name="idNumber" placeholder="identity number..." [(ngModel)]="personDetails.idNumber" minlength="8" maxlength="8" required/><br/>
+    <div *ngIf="invalidIdNumber">
+        מספר ת.ז. לא תקין
+    </div><br/>
     <label for="birthDate">הכנס תאריך לידה:</label><br/>
     <input type="date" value="personDetails.birthDate" name="birthDate" placeholder="birth date..." [(ngModel)]="personDetails.birthDate" required/><br/>
     <label for="kind">בחר מין</label><br/>
