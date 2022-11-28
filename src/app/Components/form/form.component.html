@@ -1,0 +1,24 @@
+<p>form works!</p>
+<h1>שלום {{personDetails.firstName+' '+personDetails.lastName}} </h1>
+<button (click)="saveLocalData()" routerLink="/instructions">הוראות מילוי הטופס</button>
+<form #myForm="ngForm">
+    <input type="text" value="personDetails.firstName" name="firstName"  placeholder="fist name..." [(ngModel)]="personDetails.firstName" required/>
+    <input type="text" value="personDetails.lastName" name="lastName" placeholder="last name..." [(ngModel)]="personDetails.lastName" required/>
+    <input type="text" value="personDetails.idNumber" name="idNumber" placeholder="identity number..." [(ngModel)]="personDetails.idNumber" required/>
+    <input type="date" value="personDetails.birthDate" name="birthDate" placeholder="birth date..." [(ngModel)]="personDetails.birthDate" required/>
+    
+    <select name="kind" value="personDetails.kind" [(ngModel)]="personDetails.kind" required>
+        <option *ngFor="let k of kinds">{{k}}</option>
+    </select>
+    <select name="hmo" value="personDetails.hmo" [(ngModel)]="personDetails.hmo" required>
+        <option>בחר קופת חולים</option>
+        <option *ngFor="let hmo of HMO">{{hmo}}</option>
+    </select>
+    <input type="number" #numOfChildren (change)="initialChildrenArray(numOfChildren.value)" placeholder="מספר ילדים" required/>
+    <div *ngIf="personDetails.children.length > 0">
+        <app-children-form name="children" *ngFor="let c of personDetails.children"  ></app-children-form>
+    </div>
+    <input type="submit" value="שמור">
+</form>
+
+<router-outlet></router-outlet>
