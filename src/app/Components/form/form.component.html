@@ -5,7 +5,7 @@
 <form #myForm="ngForm" (ngSubmit)="onSubmit()">
     
     <label for="firstName" class="inputs">הכנס שם פרטי:</label><br/>
-    <input type="text" class="inputs" value="personDetails.firstName" name="firstName" #Fname="ngModel"  placeholder="fist name..." [(ngModel)]="personDetails.firstName" minlength="2" maxlength="10" required/><br/>
+    <input type="text" class="inputs" value="personDetails.firstName" name="firstName" #Fname="ngModel"  placeholder="first name..." [(ngModel)]="personDetails.firstName" minlength="2" maxlength="10" required/><br/>
     <div  *ngIf="Fname.invalid && (Fname.dirty || Fname.touched)" class="alert">
         זהו שדה חובה, ועליו להכיל בין 2 ל-10 תווים
     </div><br/>
@@ -33,9 +33,9 @@
         <option *ngFor="let hmo of HMO">{{hmo}}</option>
     </select><br/>
     <label class="inputs">הכנס מספר ילדים</label><br/>
-    <input class="inputs" type="number" #numOfChildren minvalue="0" (change)="initialChildrenArray(numOfChildren.value)" placeholder="מספר ילדים"/>
-    <div class="inputs" *ngIf="personDetails.children.length > 0">
-        <app-children-form name="children" *ngFor="let c of personDetails.children"  ></app-children-form>
+    <input class="inputs" type="number" #numOfChildren  (change)="initialChildrenArray(numOfChildren.value)" [min]="0" placeholder="מספר ילדים"/>
+    <div  *ngIf="personDetails.children.length > 0">
+        <app-children-form name="children" *ngFor="let c of personDetails.children"  [location]="getLocation()" (on-entering)="addLocation(location)"></app-children-form>
         <!-- [location]="personDetails.children.concat()" -->
     </div><br/><br/>
     <input class="button" type="submit" value="שמור" [disabled]="!myForm.valid">

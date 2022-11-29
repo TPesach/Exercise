@@ -38,20 +38,33 @@ export class FormComponent implements OnInit {
     // קבלת מידע מהסרביס האם יש כבר שדות מלאים
     // routeז"א שזה לא ביקור ראשון בקומפוננטה אלא מעבר ב
     this.personDetails = this.personLD.personDetails;
+    this.location = this.personLD.location;
+  }
+
+  addLocation(location:number){
+    this.location=location+1;
   }
 
   initialChildrenArray(numOfChildren:string){
-    //  var nC = parseInt(numOfChildren);
+     var nC = parseInt(numOfChildren);
     //  var child = {
     //   name:"",
     //   idNumber:"",
     //   birthDate:new Date()
     //  }
+     this.location = nC-1;
      
-    //   this.personLD.personDetails.children.push(new Children("","",new Date()));
-    //   this.personDetails.children=this.personLD.personDetails.children;
+     if(this.location > this.personLD.location){
+      this.personLD.addChild();
+     }
+     else{
+      this.personLD
+     }
+      
+     this.personLD.location = this.location;
+      this.personDetails.children=this.personLD.personDetails.children;
      
-    //this.personLD.personDetails.children = new Array<Children>(nC);
+    // this.personLD.personDetails.children = new Array<Children>(nC);
     
   }
 
@@ -85,5 +98,11 @@ export class FormComponent implements OnInit {
     this.personLD.saveAsProject();
     alert("שים לב לקובץ פרטים אישיים שהורד למחשב שלך")
   }
+
+  getLocation(){
+    return this.location;
+  }
+
+  
 
 }

@@ -22,6 +22,21 @@ export class PersonLocalDetailsService {
         children:Array<Children>()
   }
 
+  location=-1;
+
+  addChild(){
+    var child={
+      name:"",
+      idNumber:"",
+      birthDate:new Date()
+    }
+    this.personDetails.children.push(child);
+  }
+
+  sliceChild(){
+    this.personDetails.children.pop();
+  }
+
   
 //שמירת הנתונים
   saveAsProject(){

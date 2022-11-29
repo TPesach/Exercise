@@ -1,11 +1,12 @@
+<h3>ילד {{location}}</h3>
 <form #myForm="ngForm">
-    <input type="text" (blur)="save(0)" name="firstName" value="child.name"  placeholder="fist name..." [(ngModel)]="child.name" required/>
+    <input type="text" class="inputs" (blur)="save(0)" name="firstName" value="child.name"  placeholder="first name..." [(ngModel)]="child.name" required/>
     <br/>
-    <input type="text" (blur)="save(1)" name="idNumber" value="child.idNumber" placeholder="identity number..." [(ngModel)]="child.idNumber" required/>
+    <input type="text" class="inputs" (blur)="save(1)" name="idNumber" value="child.idNumber" placeholder="identity number..." [(ngModel)]="child.idNumber" required/>
     <br/>
-    <div *ngIf="invalidIdNumber">
+    <div class="alert" *ngIf="invalidIdNumber">
         מספר ת.ז. לא תקין
     </div><br/>
     <br/>
-    <input type="date" (blur)="save(0)" name="birthDate" value="child.birthDate" placeholder="birth date..." [(ngModel)]="child.birthDate" required/>
+    <input class="inputs" type="date" (blur)="save(0)" name="birthDate" value="child.birthDate" placeholder="birth date..." [(ngModel)]="child.birthDate" required/>
 </form>

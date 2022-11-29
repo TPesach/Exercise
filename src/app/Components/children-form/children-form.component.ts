@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Children } from 'src/app/Classes/children';
 import { PersonLocalDetailsService } from 'src/app/Service/person-local-details.service';
 
@@ -17,20 +17,24 @@ export class ChildrenFormComponent implements OnInit {
     birthDate:new Date()
   };
 
+  @Output("on-entering")onEntering: EventEmitter<any> = new EventEmitter<any>();
   @Input("location") location:any
   realLocation = 0;
   invalidIdNumber:boolean = false;
 
   ngOnInit(): void {
-    this.realLocation = this.location.length - 1;
-    this.child = this.personLD.personDetails.children[this.realLocation]
-    // if(this.child == undefined)
-    //   this.child={
-    //     name:"",
-    //     idNumber:"",
-    //     birthDate:new Date()
-    //   };
-    console.log(this.location.length);
+    this.onEntering.emit(this.location);
+    //this.realLocation = this.location;
+    this.child = this.personLD.personDetails.children[this.location];
+    if(this.child == undefined)
+      this.child={
+        name:"",
+        idNumber:"",
+        birthDate:new Date()
+      };
+      console.log(this.personLD.personDetails.children.toString());
+      
+    console.log(this.location);
     console.log(this.child);
     
   }
@@ -56,10 +60,10 @@ export class ChildrenFormComponent implements OnInit {
   save(num:number){
     if(num == 1)
       this.checkId();
-    console.log(this.realLocation);
-      this.personLD.personDetails.children[this.realLocation].name = this.child.name;
-      this.personLD.personDetails.children[this.realLocation].idNumber = this.child.idNumber;
-      this.personLD.personDetails.children[this.realLocation].birthDate = this.child.birthDate;
+    console.log(this.location);
+      this.personLD.personDetails.children[this.location].name = this.child.name;
+      this.personLD.personDetails.children[this.location].idNumber = this.child.idNumber;
+      this.personLD.personDetails.children[this.location].birthDate = this.child.birthDate;
   }
 
 }
