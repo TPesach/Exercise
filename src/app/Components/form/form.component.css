@@ -71,10 +71,13 @@
 
   .button{
     background: #0dbadc 0% 0% no-repeat padding-box;
+    opacity: 0.88;
     border-radius: 22px;
     font: normal normal bold 16px/29px Assistant;
     text-align: center;
     font-weight: bold;
     font-size: 21px;
+    border: 0px;
+    color: #f7f7f7;
   }
   
