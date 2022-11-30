@@ -7,7 +7,10 @@ import { ChildrenFormComponent } from './Components/children-form/children-form.
 
 const routes:Routes = [
   { path: "", redirectTo: "form", pathMatch: "full" },
-  {path:"form", component:FormComponent},
+  {path:"form", component:FormComponent,
+children:[
+  {path:"child/:location", component:ChildrenFormComponent}
+]},
   {path:"instructions", component:InstructionsComponent}
 ];
 

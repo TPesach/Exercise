@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Action } from 'rxjs/internal/scheduler/Action';
 import { Children } from 'src/app/Classes/children';
 import { PersonLocalDetailsService } from 'src/app/Service/person-local-details.service';
 
@@ -9,7 +11,9 @@ import { PersonLocalDetailsService } from 'src/app/Service/person-local-details.
 })
 export class ChildrenFormComponent implements OnInit {
 
-  constructor(private personLD:PersonLocalDetailsService) { }
+  constructor(private personLD:PersonLocalDetailsService, 
+    private active:ActivatedRoute,
+    private router:Router) { }
 
   child={
     name:"",
@@ -17,14 +21,20 @@ export class ChildrenFormComponent implements OnInit {
     birthDate:new Date()
   };
 
-  @Output("on-entering")onEntering: EventEmitter<any> = new EventEmitter<any>();
-  @Input("location") location:any
-  realLocation = 0;
+  // @Output("on-entering")onEntering: EventEmitter<any> = new EventEmitter<any>();
+  // @Input("location") location:any
+location = 0;
   invalidIdNumber:boolean = false;
 
   ngOnInit(): void {
-    this.onEntering.emit(this.location);
-    //this.realLocation = this.location;
+    // this.onEntering.emit(this.location);
+    //this.realLocation = this.location;this.active.params.subscribe(
+    this.active.params.subscribe(  
+    myParams=>{
+         this.location = myParams["location"]; 
+          },
+          err=>{alert(err.massege)}
+        );
     this.child = this.personLD.personDetails.children[this.location];
     if(this.child == undefined)
       this.child={
